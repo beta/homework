@@ -1,0 +1,24 @@
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link.is-active {
+  background-color: #e0e0e0;
+}
+
+.mdl-layout__drawer .mdl-navigation .homework-navigation__divider {
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.mdl-layout__content .page-content {
+  padding: 0 8px;
+}
+
+.mdl-layout__content .page-content .homework-card {
+  max-width: 600px;
+  width: 100%;
+  margin: 16px auto;
+}
+
+.mdl-layout__content .page-content .homework-card .mdl-card__title {
+  background: url('../images/header_image51.jpg');
+  height: 176px;
+  color: #fff;
+}
