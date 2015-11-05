@@ -1,3 +1,20 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url('../fonts/MaterialIcons-Regular.woff') format('woff'),
+       url('../fonts/MaterialIcons-Regular.woff2') format('woff2'),
+       url('../fonts/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+body {
+  background-color: #f0f0f0;
+  font-size: 13px;
+}
+
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link.is-active {
   background-color: #e0e0e0;
 }
@@ -9,6 +26,68 @@
 
 .mdl-layout__content .page-content {
   padding: 0 8px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.mdl-layout__content .page-content .homework-section__header {
+  line-height: 48px;
+  padding-top: 8px;
+  padding-left: 24px;
+}
+
+.mdl-layout__content .page-content .homework-list {
+  cursor: pointer;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+              0 3px 1px -2px rgba(0, 0, 0, .2),
+              0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.homework-list .homework-list__item {
+  background-color: #fff;
+  height: 48px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 13px;
+  transition-duration: .28s;
+  transition-property: background-color;
+}
+
+.homework-list .homework-list__item:first-of-type {
+  border-top: 0px;
+}
+
+.homework-list .homework-list__item:hover {
+  background-color: #eee;
+}
+
+.homework-list__item .homework-list__item--icon,
+.homework-list__item .homework-list__item--course,
+.homework-list__item .homework-list__item--content,
+.homework-list__item .homework-list__item--deadline {
+  display: inline-block;
+  line-height: 48px;
+  vertical-align: top;
+}
+
+.homework-list__item .homework-list__item--icon {
+  padding: 8px 24px;
+}
+
+.homework-list__item .homework-list__item--course {
+  width: 120px;
+}
+
+.homework-list__item .homework-list__item--content {
+  color: #757575;
+}
+
+.homework-list__item .homework-list__item--deadline {
+  float: right;
+  padding-right: 24px;
+}
+
+.homework-list__item .is-urgent {
+  color: #f44336;
 }
 
 .mdl-layout__content .page-content .homework-card {
