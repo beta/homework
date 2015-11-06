@@ -10,6 +10,11 @@
        url('../fonts/MaterialIcons-Regular.ttf') format('truetype');
 }
 
+* {
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+  font-weight: normal;
+}
+
 body {
   background-color: #f0f0f0;
   font-size: 13px;
@@ -26,30 +31,77 @@ body {
 
 .mdl-layout__content .page-content {
   padding: 0 8px;
-  max-width: 560px;
-  margin: 0 auto;
 }
 
 .mdl-layout__content .page-content .homework-section__header {
+  margin: 0 auto;
+  max-width: 560px;
   line-height: 48px;
   padding-top: 8px;
   padding-left: 24px;
 }
 
-.mdl-layout__content .page-content .homework-list {
-  cursor: pointer;
+.homework-list .homework-card {
+  background-color: #fff;
+  width: 100%;
+  max-width: 600px;
+  margin: 32px auto;
+  color: rgba(0, 0, 0, .87);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
               0 3px 1px -2px rgba(0, 0, 0, .2),
               0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
+.homework-list .homework-card .mdl-card__title {
+  background-size: cover;
+  height: 256px;
+  color: #fff;
+}
+
+.homework-list .homework-card .homework-card__section {
+  min-height: 52px;
+  padding: 0 16px;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  font-size: 13px;
+}
+
+.homework-list .homework-card .homework-card__section .icon {
+  line-height: 52px;
+  vertical-align: top;
+  padding-right: 16px;
+}
+
+.homework-list .homework-card .homework-card__section .content {
+  display: inline-block;
+  padding-top: 19px;
+}
+
+.homework-list .homework-card .homework-card__section .content p {
+  font-size: 13px;
+  line-height: 1;
+}
+
 .homework-list .homework-list__item {
+  display: block;
+  cursor: pointer;
+  margin: 0 auto;
+  max-width: 560px;
   background-color: #fff;
+  color: rgba(0, 0, 0, .87);
   height: 48px;
   border-top: 1px solid #e0e0e0;
   font-size: 13px;
+  text-decoration: none;
   transition-duration: .28s;
   transition-property: background-color;
+  border-left: 3px solid transparent;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+              0 3px 1px -2px rgba(0, 0, 0, .2),
+              0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.homework-list__item.is-urgent {
+  border-left: 3px solid #f44336;
 }
 
 .homework-list .homework-list__item:first-of-type {
@@ -70,7 +122,7 @@ body {
 }
 
 .homework-list__item .homework-list__item--icon {
-  padding: 8px 24px;
+  padding: 8px 24px 8px 22px;
 }
 
 .homework-list__item .homework-list__item--course {
@@ -79,25 +131,26 @@ body {
 
 .homework-list__item .homework-list__item--content {
   color: #757575;
+  width: 45%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 560px) {
+  .homework-list__item .homework-list__item--content {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .homework-list__item .homework-list__item--content {
+    display: none;
+  }
 }
 
 .homework-list__item .homework-list__item--deadline {
   float: right;
+  text-align: right;
   padding-right: 24px;
-}
-
-.homework-list__item .is-urgent {
-  color: #f44336;
-}
-
-.mdl-layout__content .page-content .homework-card {
-  max-width: 600px;
-  width: 100%;
-  margin: 16px auto;
-}
-
-.mdl-layout__content .page-content .homework-card .mdl-card__title {
-  background: url('../images/header_image51.jpg');
-  height: 176px;
-  color: #fff;
 }
