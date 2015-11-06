@@ -127,7 +127,7 @@ body {
               0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
-.homework-list__item.is-urgent {
+.homework-list.today .homework-list__item {
   border-left: 3px solid #f44336;
 }
 
