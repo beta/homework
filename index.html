@@ -5,12 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="stylesheet" href="./bower_components/material-design-lite/material.min.css">
-    <link rel="stylesheet" href="./static/css/style.css">
-    <script src="./bower_components/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="bower_components/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="bower_components/material-design-lite/material.min.js"></script>
+    
+    <script src="bower_components/director/build/director.min.js"></script>
+    <script src="bower_components/ractive/ractive.min.js"></script>
+    <script src="bower_components/marked/marked.min.js"></script>
+    <script src="bower_components/js-yaml/dist/js-yaml.js"></script>
+    
+    <script src="static/js/jquery-2.1.4.min.js"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
     <title>Homework</title>
   </head>
   <body>
+    <div id="main" class="mdl-layout mdl-js-layout mdl-layout--fixed-header"></div>
+    
+    <script type="text/ractive" id="spinner-template">
+    </script>
+    
+    <script type="text/ractive" id="list-template">
+    </script>
+    
+    <script type="text/ractive" id="detail-template">
+    </script>
+    
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
@@ -124,8 +144,5 @@
         </div>
       </main>
     </div>
-    
-    <script src="./static/js/jquery-2.1.4.min.js"></script>
-    <script src="./static/js/homework.js"></script>
   </body>
 </html>
