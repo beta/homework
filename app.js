@@ -32,6 +32,21 @@ var DateUtil = {
     var now = new Date();
     var dateDifferenceWithThisSunday = DateUtil.computeDateDifferenceWithNow(date) - (7 - now.getDay());
     return (dateDifferenceWithThisSunday >= 1 && dateDifferenceWithThisSunday <= 7);
+  },
+  getDateDescriptor: function (date) {
+    var numbers = ['日', '一', '二', '三', '四', '五', '六'];
+    
+    if (DateUtil.isToday(date)) {
+      return "今天";
+    } else if (DateUtil.isTomorrow(date)) {
+      return "明天";
+    } else if (DateUtil.isInThisWeek(date)) {
+      return '周' + numbers[date.getDay()];
+    } else if (DateUtil.isInNextWeek(date)) {
+      return '下周' + numbers[date.getDay()];
+    } else {
+      return (date.getMonth() + 1) + '-' + date.getDate();
+    }
   }
 };
 
@@ -61,6 +76,7 @@ var HomeworkUtil = {
         homework.deadlineTime = new Date(homework.deadline);
         DateUtil.setToZeroOClock(homework.deadlineTime);
       }
+      homework.deadlineDescriptor = DateUtil.getDateDescriptor(homework.deadlineTime);
       
       homeworkList.push(homework);
     });
@@ -136,14 +152,75 @@ var HomeworkUtil = {
     sortedHomeworkList.later.sort(compareByDeadline);
     
     return sortedHomeworkList;
+  },
+  
+  getSortedHomeworkList: function (options) {
+    return HomeworkUtil.sortHomeworkList(HomeworkUtil.getHomeworkList(options));
   }
 }
 
-HomeworkUtil.getHomeworkList({
-  success: function (homeworkList) {
-    console.log(HomeworkUtil.sortHomeworkList(homeworkList));
-  },
-  error: function (jqXHR, textStatus, errorThrown) {
-    console.error(errorThrown);
+var showSpinner = function () {
+  var spinner = document.createElement('div');
+  spinner.className = 'mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active';
+  componentHandler.upgradeElement(spinner);
+  
+  var spinnerCenter = document.createElement('div');
+  spinnerCenter.appendChild(spinner);
+  componentHandler.upgradeElement(spinnerCenter);
+  
+  var spinnerMain = document.createElement('main');
+  spinnerMain.className = 'mdl-layout__content';
+  spinnerMain.appendChild(spinnerCenter);
+  componentHandler.upgradeElement(spinnerMain);
+  
+  $('#main').empty();
+  $('#main').append(spinnerMain);
+};
+
+var loadAndShowHomeworkList = function () {
+  HomeworkUtil.getHomeworkList({
+    success: function (homeworkList) {
+      homeworkList = HomeworkUtil.sortHomeworkList(homeworkList);
+      window.homeworks.list = homeworkList;
+      
+      var ractiveIndex = new Ractive({
+        el: 'main',
+        template: '#list-template',
+        data: {
+          homeworkList: homeworkList
+        }
+      });
+      
+      window.homeworks.pages.index = ractiveIndex.toHTML();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(errorThrown);
+    }
+  });
+}
+
+var index = function () {
+  $('title').html(_config.title);
+  
+  showSpinner();
+  
+  window.homeworks = window.homeworks || { list: [], pages: {}};
+  if (window.homeworks.pages.index != undefined) {
+    $('#main').html(window.homeworks.pages.index);
+  } else {
+    loadAndShowHomeworkList();
   }
-});
+};
+
+var detail = function (id) {
+  console.log(id);
+};
+
+var routes = {
+  '/': index,
+  '//': index,
+  '/homework/:id': detail
+};
+
+var router = new Router(routes);
+router.init('/');

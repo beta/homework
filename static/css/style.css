@@ -47,13 +47,14 @@ body {
   font-size: 13px;
 }
 
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link.is-active {
-  background-color: #e0e0e0;
+.mdl-layout .homework-layout__header-row {
+  padding-left: 40px;
 }
 
-.mdl-layout__drawer .mdl-navigation .homework-navigation__divider {
-  height: 1px;
-  background: #e0e0e0;
+@media screen and (max-width: 480px) {
+  .mdl-layout .homework-layout__header-row {
+    padding-left: 24px;
+  }
 }
 
 .mdl-layout__content .page-content {
