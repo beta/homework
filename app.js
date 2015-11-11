@@ -246,6 +246,7 @@ var loadAndShowHomework = function (id) {
       });
       
       window.homeworks.pages.details[id] = ractiveDetail.toHTML();
+      window.ractiveHeader.set('course', homework.course);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error(errorThrown);
@@ -272,12 +273,14 @@ var detail = function (id) {
   showSpinner();
   
   window.ractiveHeader.set('isDetailPage', true);
+  window.ractiveHeader.set('course', '');
   
   window.homeworks = window.homeworks || { homeworks: [], list: {}, pages: { details: [] } };
   if (window.homeworks.pages.details[id] != undefined &&
       window.homeworks.homeworks[id] != undefined) {
     $('#main').html(window.homeworks.pages.details[id]);
     $('title').html(window.homeworks.homeworks[id].course);
+    window.ractiveHeader.set('course', window.homeworks.homeworks[id].course);
   } else {
     loadAndShowHomework(id);
   }
@@ -296,7 +299,8 @@ window.ractiveHeader = new Ractive({
   el: 'header',
   template: '#header-template',
   data: {
-    isDetailPage: false
+    isDetailPage: false,
+    course: ''
   }
 });
 
