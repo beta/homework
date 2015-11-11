@@ -51,43 +51,75 @@ var DateUtil = {
 };
 
 var HomeworkUtil = {
+  
+  parseIssue: function (issue) {
+    var metadata = issue.body.substring(0, issue.body.indexOf('---'));
+    var homework = jsyaml.safeLoad(metadata);
+    
+    homework.id = issue.number;
+    homework.course = issue.title;
+    homework.content = issue.body.substring(issue.body.indexOf('---') + 7);
+    
+    homework.labels = [];
+    issue.labels.forEach(function (label) {
+      homework.labels.push(label.name);
+      if (label.name == 'lab') {
+        homework.type = 'lab';
+      }
+    });
+    homework.type = homework.type || 'homework';
+    
+    homework.url = issue.url;
+    
+    if (homework.deadline != 'end-of-term' || homework.deadline != 'unknown') {
+      homework.deadlineTime = new Date(homework.deadline);
+      DateUtil.setToZeroOClock(homework.deadlineTime);
+    }
+    
+    if (homework.deadline == 'end-of-term') {
+      homework.deadlineDescriptor = homework.deadlineFullDescriptor = '期末';
+    } else if (homework.deadline == 'unknown') {
+      homework.deadlineDescriptor = homework.deadlineFullDescriptor = '未知';
+    } else {
+      homework.deadlineDescriptor = DateUtil.getDateDescriptor(homework.deadlineTime);
+      homework.deadlineFullDescriptor = (homework.deadlineTime.getMonth() + 1) + ' 月 ' + homework.deadlineTime.getDate() + ' 日';
+      if (DateUtil.isInThisWeek(homework.deadlineTime) ||
+          DateUtil.isInNextWeek(homework.deadlineTime)) {
+        homework.deadlineFullDescriptor += '（' + homework.deadlineDescriptor + '）';
+      }
+    }
+    
+    return homework;
+  },
+  
   parseIssues: function (issueList) {
     var homeworkList = [];
     issueList.forEach(function (issue) {
-      var metadata = issue.body.substring(0, issue.body.indexOf('---'));
-      var homework = jsyaml.safeLoad(metadata);
-      
-      homework.id = issue.number;
-      homework.course = issue.title;
-      homework.content = issue.body.substring(issue.body.indexOf('---') + 7);
-      
-      homework.labels = [];
-      issue.labels.forEach(function (label) {
-        homework.labels.push(label.name);
-        if (label.name == 'lab') {
-          homework.type = 'lab';
-        }
-      });
-      homework.type = homework.type || 'homework';
-      
-      homework.url = issue.url;
-      
-      if (homework.deadline != 'end-of-term' || homework.deadline != 'unknown') {
-        homework.deadlineTime = new Date(homework.deadline);
-        DateUtil.setToZeroOClock(homework.deadlineTime);
-      }
-      
-      if (homework.deadline == 'end-of-term') {
-        homework.deadlineDescriptor = '期末';
-      } else if (homework.deadline == 'unknown') {
-        homework.deadlineDescriptor = '未知';
-      } else {
-        homework.deadlineDescriptor = DateUtil.getDateDescriptor(homework.deadlineTime);
-      }
-      
-      homeworkList.push(homework);
+      homeworkList.push(HomeworkUtil.parseIssue(issue));
     });
     return homeworkList;
+  },
+  
+  getHomework: function (options) {
+    options = (typeof options !== 'object') ? {} : options;
+    options.id = options.id || 1;
+    options.success = options.success || function (homework) {};
+    options.error = options.error || function (jqXHR, textStatus, errorThrown) {};
+    
+    var data = {};
+    if (_config.access_token != '') {
+      data.access_token = _config.access_token;
+    }
+    
+    $.ajax({
+      url: "https://api.github.com/repos/beta/homework/issues/" + options.id,
+      data: data,
+      success: function (data, textStatus, jqXHR) {
+        var homework = HomeworkUtil.parseIssue(data);
+        options.success(homework); 
+      },
+      error: options.error
+    });
   },
   
   getHomeworkList: function (options) {
@@ -107,9 +139,7 @@ var HomeworkUtil = {
         var homeworkList = HomeworkUtil.parseIssues(data);
         options.success(homeworkList);
       },
-      error: function (jqXHR, textStatus, errorThrown) {
-        options.error(jqXHR, textStatus, errorThrown);
-      }
+      error: options.error
     });
   },
   
@@ -161,6 +191,7 @@ var HomeworkUtil = {
   getSortedHomeworkList: function (options) {
     return HomeworkUtil.sortHomeworkList(HomeworkUtil.getHomeworkList(options));
   }
+  
 }
 
 var showSpinner = function () {
@@ -175,18 +206,46 @@ var showSpinner = function () {
 var loadAndShowHomeworkList = function () {
   HomeworkUtil.getHomeworkList({
     success: function (homeworkList) {
-      homeworkList = HomeworkUtil.sortHomeworkList(homeworkList);
-      window.homeworks.list = homeworkList;
+      window.homeworks.homeworks = [];
+      homeworkList.forEach(function (homework) {
+        window.homeworks.homeworks[homework.id] = homework;
+      });
+      
+      window.homeworks.list = HomeworkUtil.sortHomeworkList(homeworkList);
       
       var ractiveIndex = new Ractive({
         el: 'main',
         template: '#list-template',
         data: {
-          homeworkList: homeworkList
+          homeworkList: window.homeworks.list
         }
       });
       
       window.homeworks.pages.index = ractiveIndex.toHTML();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(errorThrown);
+    }
+  });
+}
+
+var loadAndShowHomework = function (id) {
+  HomeworkUtil.getHomework({
+    id: id,
+    success: function (homework) {
+      window.homeworks.homeworks[id] = homework;
+      
+      var imageIndex = Math.floor(Math.random() * 120 + 1);
+      var ractiveDetail = new Ractive({
+        el: 'main',
+        template: '#detail-template',
+        data: {
+          homework: homework,
+          imageIndex: imageIndex
+        }
+      });
+      
+      window.homeworks.pages.details[id] = ractiveDetail.toHTML();
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error(errorThrown);
@@ -199,7 +258,9 @@ var index = function () {
   
   showSpinner();
   
-  window.homeworks = window.homeworks || { list: [], pages: {}};
+  window.ractiveHeader.set('isDetailPage', false);
+  
+  window.homeworks = window.homeworks || { homeworks: [], list: {}, pages: { details: [] } };
   if (window.homeworks.pages.index != undefined) {
     $('#main').html(window.homeworks.pages.index);
   } else {
@@ -208,13 +269,41 @@ var index = function () {
 };
 
 var detail = function (id) {
-  console.log(id);
+  showSpinner();
+  
+  window.ractiveHeader.set('isDetailPage', true);
+  
+  window.homeworks = window.homeworks || { homeworks: [], list: {}, pages: { details: [] } };
+  if (window.homeworks.pages.details[id] != undefined &&
+      window.homeworks.homeworks[id] != undefined) {
+    $('#main').html(window.homeworks.pages.details[id]);
+    $('title').html(window.homeworks.homeworks[id].course);
+  } else {
+    loadAndShowHomework(id);
+  }
 };
+
+var helpers = Ractive.defaults.data;
+helpers.markdown2HTML = function (content) {
+  return marked(content, {
+    highlight: function (code) {
+      return hljs.highlightAuto(code).value;
+    }
+  });
+};
+
+window.ractiveHeader = new Ractive({
+  el: 'header',
+  template: '#header-template',
+  data: {
+    isDetailPage: false
+  }
+});
 
 var routes = {
   '/': index,
   '//': index,
-  '/homework/:id': detail
+  '/detail/:id': detail
 };
 
 var router = new Router(routes);

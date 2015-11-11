@@ -37,12 +37,24 @@
   font-feature-settings: 'liga';
 }
 
-* {
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
-  font-weight: normal;
+code {
+  font-family: "Monaco", "Consolas", "Liberation Mono", Menlo, "Courier New", Courier, monospace;
+  font-size: 85%;
+  background-color: #f7f7f7;
+  padding: 0.2em;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: #F7F7F7;
+  padding: 16px;
+  border-radius: 3px;
+  overflow: scroll;
+  word-break: keep-all;
 }
 
 body {
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
   background-color: #f0f0f0;
   font-size: 13px;
 }
@@ -74,7 +86,7 @@ body {
   padding-left: 24px;
 }
 
-.homework-list .homework-card {
+.page-content .homework-card {
   background-color: #fff;
   width: 100%;
   max-width: 600px;
@@ -85,31 +97,35 @@ body {
               0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
-.homework-list .homework-card .mdl-card__title {
+.page-content .homework-card .mdl-card__title {
   background-size: cover;
   height: 256px;
   color: #fff;
 }
 
-.homework-list .homework-card .homework-card__section {
+.page-content .homework-card .mdl-card__supporting-text {
+  width: initial;
+}
+
+.page-content .homework-card .homework-card__section {
   min-height: 52px;
   padding: 0 16px;
   border-top: 1px solid rgba(0, 0, 0, .1);
   font-size: 13px;
 }
 
-.homework-list .homework-card .homework-card__section .icon {
+.page-content .homework-card .homework-card__section .icon {
   line-height: 52px;
   vertical-align: top;
   padding-right: 16px;
 }
 
-.homework-list .homework-card .homework-card__section .content {
+.page-content .homework-card .homework-card__section .content {
   display: inline-block;
   padding-top: 19px;
 }
 
-.homework-list .homework-card .homework-card__section .content p {
+.page-content .homework-card .homework-card__section .content p {
   font-size: 13px;
   line-height: 1;
 }
@@ -120,6 +136,7 @@ body {
   margin: 0 auto;
   max-width: 560px;
   background-color: #fff;
+  font-weight: normal;
   color: rgba(0, 0, 0, .87);
   height: 48px;
   border-top: 1px solid #e0e0e0;
