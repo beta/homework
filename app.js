@@ -122,6 +122,27 @@ var HomeworkUtil = {
     });
   },
   
+  getComments: function (options) {
+    options = (typeof options !== 'object') ? {} : options;
+    options.id = options.id || 1;
+    options.success = options.success || function (comments) {};
+    options.error = options.error || function (jqXHR, textStatus, errorThrown) {};
+    
+    var data = {};
+    if (_config.access_token != '') {
+      data.access_token = _config.access_token;
+    }
+    
+    $.ajax({
+      url: 'https://api.github.com/repos/beta/homework/issues/' + options.id + '/comments',
+      data: data,
+      success: function (data, textStatus, jqXHR) {
+        options.success(data);
+      },
+      error: options.error
+    });
+  },
+  
   getHomeworkList: function (options) {
     options = (typeof options !== 'object') ? {} : options;
     options.success = options.success || function (homeworkList) {};
@@ -192,7 +213,7 @@ var HomeworkUtil = {
     return HomeworkUtil.sortHomeworkList(HomeworkUtil.getHomeworkList(options));
   }
   
-}
+};
 
 var showSpinner = function () {
   var spinner = document.createElement('div');
@@ -227,7 +248,7 @@ var loadAndShowHomeworkList = function () {
       console.error(errorThrown);
     }
   });
-}
+};
 
 var loadAndShowHomework = function (id) {
   HomeworkUtil.getHomework({
@@ -252,7 +273,20 @@ var loadAndShowHomework = function (id) {
       console.error(errorThrown);
     }
   });
-}
+};
+
+var loadAndShowComments = function (id) {
+  if (window.homeworks.comments[id] != undefined) {
+    // TODO: display comments
+  } else {
+    HomeworkUtil.getComments({
+      id: id,
+      success: function (comments) {
+        // TODO: cache and display comments
+      }
+    });
+  }
+};
 
 var index = function () {
   $('title').html(_config.title);
@@ -261,7 +295,7 @@ var index = function () {
   
   window.ractiveHeader.set('isDetailPage', false);
   
-  window.homeworks = window.homeworks || { homeworks: [], list: {}, pages: { details: [] } };
+  window.homeworks = window.homeworks || { homeworks: [], comments: [], list: {}, pages: { details: [] } };
   if (window.homeworks.pages.index != undefined) {
     $('#main').html(window.homeworks.pages.index);
   } else {
@@ -275,12 +309,14 @@ var detail = function (id) {
   window.ractiveHeader.set('isDetailPage', true);
   window.ractiveHeader.set('course', '');
   
-  window.homeworks = window.homeworks || { homeworks: [], list: {}, pages: { details: [] } };
+  window.homeworks = window.homeworks || { homeworks: [], comments: [], list: {}, pages: { details: [] } };
   if (window.homeworks.pages.details[id] != undefined &&
       window.homeworks.homeworks[id] != undefined) {
     $('#main').html(window.homeworks.pages.details[id]);
     $('title').html(window.homeworks.homeworks[id].course);
     window.ractiveHeader.set('course', window.homeworks.homeworks[id].course);
+    
+    loadAndShowComments(id);
   } else {
     loadAndShowHomework(id);
   }
