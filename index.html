@@ -15,19 +15,10 @@
     <script src="bower_components/js-yaml/dist/js-yaml.js"></script>
     
     <script src="static/js/jquery-2.1.4.min.js"></script>
-    <title>Homework</title>
+    <title>作业</title>
   </head>
   <body>
-    <div id="main" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    </div>
-    
-    <script type="text/ractive" id="spinner-template">
-      <main class="mdl-layout__content">
-        <center><div id="spinner" class="animehub-spinner mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div></center>
-      </main>
-    </script>
-    
-    <script type="text/ractive" id="list-template">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
           <div class="homework-layout__header-row mdl-layout__header-row">
@@ -38,118 +29,97 @@
             </nav>
           </div>
         </header>
+        
         <main class="mdl-layout__content">
-          <div class="page-content">
-            <div class="homework-section__header">今天</div>
-            <div class="homework-list today">
-              <a class="homework-list__item" href="item.html">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">insert_drive_file</i>
-                </div>
-                <div class="homework-list__item--course">实用英语写作</div>
-                <div class="homework-list__item--content">打印一篇论文。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-              <a class="homework-list__item">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">computer</i>
-                </div>
-                <div class="homework-list__item--course">分布式系统</div>
-                <div class="homework-list__item--content">在教一 328 上实验课。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-            </div>
-            
-            <div class="homework-section__header">明天</div>
-            <div class="homework-list today">
-              <a class="homework-list__item" href="item.html">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">insert_drive_file</i>
-                </div>
-                <div class="homework-list__item--course">实用英语写作</div>
-                <div class="homework-list__item--content">打印一篇论文。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-              <a class="homework-list__item">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">computer</i>
-                </div>
-                <div class="homework-list__item--course">分布式系统</div>
-                <div class="homework-list__item--content">在教一 328 上实验课。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-            </div>
-            
-            <div class="homework-section__header">本周</div>
-            <div class="homework-list today">
-              <a class="homework-list__item" href="item.html">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">insert_drive_file</i>
-                </div>
-                <div class="homework-list__item--course">实用英语写作</div>
-                <div class="homework-list__item--content">打印一篇论文。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-              <a class="homework-list__item">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">computer</i>
-                </div>
-                <div class="homework-list__item--course">分布式系统</div>
-                <div class="homework-list__item--content">在教一 328 上实验课。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-            </div>
-            
-            <div class="homework-section__header">下周</div>
-            <div class="homework-list today">
-              <a class="homework-list__item" href="item.html">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">insert_drive_file</i>
-                </div>
-                <div class="homework-list__item--course">实用英语写作</div>
-                <div class="homework-list__item--content">打印一篇论文。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-              <a class="homework-list__item">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">computer</i>
-                </div>
-                <div class="homework-list__item--course">分布式系统</div>
-                <div class="homework-list__item--content">在教一 328 上实验课。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-            </div>
-            
-            <div class="homework-section__header">之后</div>
-            <div class="homework-list today">
-              <a class="homework-list__item" href="item.html">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">insert_drive_file</i>
-                </div>
-                <div class="homework-list__item--course">实用英语写作</div>
-                <div class="homework-list__item--content">打印一篇论文。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-              <a class="homework-list__item">
-                <div class="homework-list__item--icon">
-                  <i class="material-icons">computer</i>
-                </div>
-                <div class="homework-list__item--course">分布式系统</div>
-                <div class="homework-list__item--content">在教一 328 上实验课。</div>
-                <div class="homework-list__item--deadline">今天</div>
-              </a>
-            </div>
-          </div>
+          <div id="main" class="page-content"></div>
         </main>
       </div>
+    </div>
+    
+    <script type="text/ractive" id="list-template">
+      {{#if (homeworkList.today.length > 0)}}
+        <div class="homework-section__header">今天</div>
+        <div class="homework-list today">
+          {{#homeworkList.today}}
+            <a href="#detail/{{id}}" class="homework-list__item">
+              <div class="homework-list__item--icon">
+                {{#if (type == 'lab')}}
+                  <i class="material-icons">computer</i>
+                {{else}}
+                  <i class="material-icons">insert_drive_file</i>
+                {{/if}}
+              </div>
+              <div class="homework-list__item--course">{{course}}</div>
+              <div class="homework-list__item--content">{{content}}</div>
+              <div class="homework-list__item--deadline">{{deadlineDescriptor}}</div>
+            </a>
+          {{/homeworkList.today}}
+        </div>
+      {{/if}}
+      
+      {{#if (homeworkList.tomorrow.length > 0)}}
+        <div class="homework-section__header">明天</div>
+        <div class="homework-list">
+          {{#homeworkList.tomorrow}}
+            <a href="#detail/{{id}}" class="homework-list__item">
+              <div class="homework-list__item--icon">
+                {{#if (type == 'lab')}}
+                  <i class="material-icons">computer</i>
+                {{else}}
+                  <i class="material-icons">insert_drive_file</i>
+                {{/if}}
+              </div>
+              <div class="homework-list__item--course">{{course}}</div>
+              <div class="homework-list__item--content">{{content}}</div>
+              <div class="homework-list__item--deadline">{{deadlineDescriptor}}</div>
+            </a>
+          {{/homeworkList.tomorrow}}
+        </div>
+      {{/if}}
+      
+      {{#if (homeworkList.thisWeek.length > 0)}}
+        <div class="homework-section__header">本周</div>
+        <div class="homework-list">
+          {{#homeworkList.thisWeek}}
+            <a href="#detail/{{id}}" class="homework-list__item">
+              <div class="homework-list__item--icon">
+                {{#if (type == 'lab')}}
+                  <i class="material-icons">computer</i>
+                {{else}}
+                  <i class="material-icons">insert_drive_file</i>
+                {{/if}}
+              </div>
+              <div class="homework-list__item--course">{{course}}</div>
+              <div class="homework-list__item--content">{{content}}</div>
+              <div class="homework-list__item--deadline">{{deadlineDescriptor}}</div>
+            </a>
+          {{/homeworkList.thisWeek}}
+        </div>
+      {{/if}}
+      
+      {{#if (homeworkList.later.length > 0)}}
+        <div class="homework-section__header">之后</div>
+        <div class="homework-list">
+          {{#homeworkList.later}}
+            <a href="#detail/{{id}}" class="homework-list__item">
+              <div class="homework-list__item--icon">
+                {{#if (type == 'lab')}}
+                  <i class="material-icons">computer</i>
+                {{else}}
+                  <i class="material-icons">insert_drive_file</i>
+                {{/if}}
+              </div>
+              <div class="homework-list__item--course">{{course}}</div>
+              <div class="homework-list__item--content">{{content}}</div>
+              <div class="homework-list__item--deadline">{{deadlineDescriptor}}</div>
+            </a>
+          {{/homeworkList.later}}
+        </div>
+      {{/if}}
     </script>
     
     <script type="text/ractive" id="detail-template">
     </script>
-    
-    <!--
-    
-    -->
     
     <script src="config.js"></script>
     <script src="app.js"></script>

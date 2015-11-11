@@ -61,7 +61,12 @@ body {
   padding: 0 8px;
 }
 
-.mdl-layout__content .page-content .homework-section__header {
+.page-content .homework-spinner {
+  max-width: 360px;
+  margin: 230px auto;
+}
+
+.page-content .homework-section__header {
   margin: 0 auto;
   max-width: 560px;
   line-height: 48px;

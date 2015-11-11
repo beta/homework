@@ -58,8 +58,8 @@ var HomeworkUtil = {
       var homework = jsyaml.safeLoad(metadata);
       
       homework.id = issue.number;
-      
       homework.course = issue.title;
+      homework.content = issue.body.substring(issue.body.indexOf('---') + 7);
       
       homework.labels = [];
       issue.labels.forEach(function (label) {
@@ -76,7 +76,14 @@ var HomeworkUtil = {
         homework.deadlineTime = new Date(homework.deadline);
         DateUtil.setToZeroOClock(homework.deadlineTime);
       }
-      homework.deadlineDescriptor = DateUtil.getDateDescriptor(homework.deadlineTime);
+      
+      if (homework.deadline == 'end-of-term') {
+        homework.deadlineDescriptor = '期末';
+      } else if (homework.deadline == 'unknown') {
+        homework.deadlineDescriptor = '未知';
+      } else {
+        homework.deadlineDescriptor = DateUtil.getDateDescriptor(homework.deadlineTime);
+      }
       
       homeworkList.push(homework);
     });
@@ -125,8 +132,6 @@ var HomeworkUtil = {
           sortedHomeworkList.tomorrow.push(homework);
         } else if (DateUtil.isInThisWeek(homework.deadlineTime)) {
           sortedHomeworkList.thisWeek.push(homework);
-        } else if (DateUtil.isInNextWeek(homework.deadlineTime)) {
-          sortedHomeworkList.nextWeek.push(homework);
         } else if (DateUtil.isInThePast(homework.deadlineTime)) {
           // Drop this homework.
         } else {
@@ -141,14 +146,13 @@ var HomeworkUtil = {
       } else if (homework2.deadline == 'end-of-term' || homework2.deadline == 'unknown') {
         return (-1) * Infinity;
       } else {
-        return (homework2.deadlineTime - homework1.deadlineTime);
+        return (homework1.deadlineTime - homework2.deadlineTime);
       }
     };
     
     sortedHomeworkList.today.sort(compareByDeadline);
     sortedHomeworkList.tomorrow.sort(compareByDeadline);
     sortedHomeworkList.thisWeek.sort(compareByDeadline);
-    sortedHomeworkList.nextWeek.sort(compareByDeadline);
     sortedHomeworkList.later.sort(compareByDeadline);
     
     return sortedHomeworkList;
@@ -161,20 +165,11 @@ var HomeworkUtil = {
 
 var showSpinner = function () {
   var spinner = document.createElement('div');
-  spinner.className = 'mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active';
+  spinner.className = 'homework-spinner mdl-progress mdl-js-progress mdl-progress__indeterminate';
   componentHandler.upgradeElement(spinner);
   
-  var spinnerCenter = document.createElement('div');
-  spinnerCenter.appendChild(spinner);
-  componentHandler.upgradeElement(spinnerCenter);
-  
-  var spinnerMain = document.createElement('main');
-  spinnerMain.className = 'mdl-layout__content';
-  spinnerMain.appendChild(spinnerCenter);
-  componentHandler.upgradeElement(spinnerMain);
-  
   $('#main').empty();
-  $('#main').append(spinnerMain);
+  $('#main').append(spinner);
 };
 
 var loadAndShowHomeworkList = function () {
