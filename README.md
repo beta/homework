@@ -19,7 +19,7 @@
 
 需要注意的一些细节：
 
- 1. `deadline` 的格式为 `'YYYY-MM-DD'`；
+ 1. `deadline` 的格式为 `'YYYY-MM-DD'`，期末提交的用 `'end-of-term'` 表示，提交时间未定的用 `unknown` 表示；
  2. 虽然 YAML 允许字符串不使用引号表示，但是 `deadline` 的值请使用引号，从而避免解析 YAML 时自动生成 `Date` 对象；
  3. `submit` 使用 `|` 开头的 scalar；
  4. `---` 的上下请各留出一行空白；
