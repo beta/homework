@@ -127,7 +127,7 @@ var HomeworkUtil = {
     options.success = options.success || function (homeworkList) {};
     options.error = options.error || function (jqXHR, textStatus, errorThrown) {};
     
-    var data = {};
+    var data = { labels: "valid" };
     if (_config.access_token != '') {
       data.access_token = _config.access_token;
     }
