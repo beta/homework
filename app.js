@@ -116,7 +116,7 @@ var HomeworkUtil = {
       data: data,
       success: function (data, textStatus, jqXHR) {
         var homework = HomeworkUtil.parseIssue(data);
-        options.success(homework); 
+        options.success(homework);
       },
       error: options.error
     });
@@ -134,7 +134,7 @@ var HomeworkUtil = {
     }
     
     $.ajax({
-      url: 'https://api.github.com/repos/beta/homework/issues/' + options.id + '/comments',
+      url: 'https://api.github.com/repos/' + _config.username + '/' + _config.repo + '/issues/' + options.id + '/comments',
       data: data,
       success: function (data, textStatus, jqXHR) {
         options.success(data);
@@ -148,13 +148,16 @@ var HomeworkUtil = {
     options.success = options.success || function (homeworkList) {};
     options.error = options.error || function (jqXHR, textStatus, errorThrown) {};
     
-    var data = { labels: "valid" };
+    var data = {};
     if (_config.access_token != '') {
       data.access_token = _config.access_token;
     }
+    if (_config.validation == true) {
+      data.labels = _config.validation_label;
+    }
     
     $.ajax({
-      url: "https://api.github.com/repos/beta/homework/issues",
+      url: 'https://api.github.com/repos/' + _config.username + '/' + _config.repo + '/issues',
       data: data,
       success: function (data, textStatus, jqXHR) {
         var homeworkList = HomeworkUtil.parseIssues(data);
