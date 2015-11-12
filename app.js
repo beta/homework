@@ -112,7 +112,7 @@ var HomeworkUtil = {
     }
     
     $.ajax({
-      url: "https://api.github.com/repos/beta/homework/issues/" + options.id,
+      url: 'https://api.github.com/repos/' + _config.username + '/' + _config.repo + '/issues/' + options.id,
       data: data,
       success: function (data, textStatus, jqXHR) {
         var homework = HomeworkUtil.parseIssue(data);
