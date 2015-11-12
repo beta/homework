@@ -1,3 +1,14 @@
 var _config = {
-  access_token: 'de2180d08cb69bc5da4' + 'dee7a23b4834fc4a94dcd',
+  
+  // GitHub configuations.
+  username: '',
+  repo: '',
+  access_token: '',
+  
+  // Validation.
+  // If validation is set to true, only issues labelled with the
+  // validation_label will be used.
+  validation: true,
+  validation_label: 'valid',
+  
 };
