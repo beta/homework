@@ -134,6 +134,26 @@ body {
   line-height: 1;
 }
 
+.page-content .homework-card .homework-card__comment .avatar {
+  width: 24px;
+  height: 24px;
+  vertical-align: top;
+  margin-top: 14px;
+  margin-right: 16px;
+  border-radius: 12px;
+}
+
+.page-content .homework-card .homework-card__comment .date {
+  color: #393939;
+  text-decoration: none;
+}
+
+.page-content .homework-card .homework-card__comment .author {
+  color: #393939;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 .homework-list .homework-list__item {
   display: block;
   cursor: pointer;
