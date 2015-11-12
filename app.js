@@ -69,7 +69,7 @@ var HomeworkUtil = {
     });
     homework.type = homework.type || 'homework';
     
-    homework.url = issue.url;
+    homework.url = issue.html_url;
     
     if (homework.deadline != 'end-of-term' || homework.deadline != 'unknown') {
       homework.deadlineTime = new Date(homework.deadline);
@@ -92,12 +92,33 @@ var HomeworkUtil = {
     return homework;
   },
   
-  parseIssues: function (issueList) {
+  parseIssues: function (issues) {
     var homeworkList = [];
-    issueList.forEach(function (issue) {
+    issues.forEach(function (issue) {
       homeworkList.push(HomeworkUtil.parseIssue(issue));
     });
     return homeworkList;
+  },
+  
+  parseComment: function (rawComment) {
+    var comment = {
+      content: rawComment.body,
+      id: rawComment.id,
+      url: rawComment.html_url,
+      avatar: rawComment.user.avatar_url + '&s=24',
+      author: rawComment.user.login,
+      author_url: rawComment.user.html_url
+    };
+    
+    return comment;
+  },
+  
+  parseComments: function (comments) {
+    var commentList = [];
+    comments.forEach(function (comment) {
+      commentList.push(HomeworkUtil.parseComment(comment));
+    });
+    return commentList;
   },
   
   getHomework: function (options) {
@@ -137,7 +158,8 @@ var HomeworkUtil = {
       url: 'https://api.github.com/repos/' + _config.username + '/' + _config.repo + '/issues/' + options.id + '/comments',
       data: data,
       success: function (data, textStatus, jqXHR) {
-        options.success(data);
+        var comments = HomeworkUtil.parseComments(data);
+        options.success(comments);
       },
       error: options.error
     });
@@ -260,17 +282,20 @@ var loadAndShowHomework = function (id) {
       window.homeworks.homeworks[id] = homework;
       
       var imageIndex = Math.floor(Math.random() * 120 + 1);
-      var ractiveDetail = new Ractive({
+      window.ractiveDetail = new Ractive({
         el: 'main',
         template: '#detail-template',
         data: {
           homework: homework,
+          comments: [],
           imageIndex: imageIndex
         }
       });
       
-      window.homeworks.pages.details[id] = ractiveDetail.toHTML();
+      window.homeworks.pages.details[id] = window.ractiveDetail.toHTML();
       window.ractiveHeader.set('course', homework.course);
+      
+      loadAndShowComments(id);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error(errorThrown);
@@ -279,16 +304,16 @@ var loadAndShowHomework = function (id) {
 };
 
 var loadAndShowComments = function (id) {
-  if (window.homeworks.comments[id] != undefined) {
-    // TODO: display comments
-  } else {
-    HomeworkUtil.getComments({
-      id: id,
-      success: function (comments) {
-        // TODO: cache and display comments
-      }
-    });
-  }
+  HomeworkUtil.getComments({
+    id: id,
+    success: function (comments) {
+      window.homeworks.comments[id] = comments;
+      window.ractiveDetail.set('comments', comments);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(errorThrown);
+    }
+  });
 };
 
 var index = function () {

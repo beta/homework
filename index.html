@@ -159,9 +159,21 @@
             </div>
           </div>
           {{/if}}
-          <div class="homework-card__comments">
-          </div>
         {{/homework}}
+        
+        {{#comments}}
+          <div class="homework-card__comment homework-card__section">
+            <img class="avatar" src="{{avatar}}" />
+            <div class="content">
+              <p><a class="author" href="{{author_url}}" target="_blank">{{author}}</a></p>
+              {{{markdown2HTML(content)}}}
+            </div>
+          </div>
+        {{/comments}}
+        
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{homework.url}}#new_comment_field" target="_blank">添加评论</a>
+        </div>
       </div>
     </script>
     
