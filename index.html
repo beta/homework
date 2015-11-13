@@ -21,14 +21,12 @@
   </head>
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header id="header" class="mdl-layout__header">
-        </header>
-        
-        <main class="mdl-layout__content">
-          <div id="main" class="page-content"></div>
-        </main>
-      </div>
+      <header id="header" class="mdl-layout__header">
+      </header>
+      
+      <main class="mdl-layout__content">
+        <div id="main" class="page-content"></div>
+      </main>
     </div>
     
     <script type="text/ractive" id="header-template">
@@ -41,7 +39,7 @@
           </nav>
         </div>
         <a class="mdl-layout__drawer-button" href="#/">
-          <i class="material-icons">arrow_back</i>
+          <img class="back-button" src="./static/images/icons/back.png" />
         </a>
       {{else}}
         <div class="homework-layout__header-row mdl-layout__header-row">
@@ -62,9 +60,9 @@
             <a href="#detail/{{id}}" class="homework-list__item">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <i class="material-icons">computer</i>
+                  <img class="icon" src="./static/images/icons/lab.png" />
                 {{else}}
-                  <i class="material-icons">insert_drive_file</i>
+                  <img class="icon" src="./static/images/icons/homework.png" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
@@ -82,9 +80,9 @@
             <a href="#detail/{{id}}" class="homework-list__item">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <i class="material-icons">computer</i>
+                  <img class="icon" src="./static/images/icons/lab.png" />
                 {{else}}
-                  <i class="material-icons">insert_drive_file</i>
+                  <img class="icon" src="./static/images/icons/homework.png" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
@@ -102,9 +100,9 @@
             <a href="#detail/{{id}}" class="homework-list__item">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <i class="material-icons">computer</i>
+                  <img class="icon" src="./static/images/icons/lab.png" />
                 {{else}}
-                  <i class="material-icons">insert_drive_file</i>
+                  <img class="icon" src="./static/images/icons/homework.png" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
@@ -122,9 +120,9 @@
             <a href="#detail/{{id}}" class="homework-list__item">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <i class="material-icons">computer</i>
+                  <img class="icon" src="./static/images/icons/lab.png" />
                 {{else}}
-                  <i class="material-icons">insert_drive_file</i>
+                  <img class="icon" src="./static/images/icons/homework.png" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
@@ -139,21 +137,21 @@
     <script type="text/ractive" id="detail-template">
       <div class="homework-card mdl-card mdl-shadow--6dp">
         {{#homework}}
-          <div class="mdl-card__title" style="background-image: url('./static/images/header_image{{imageIndex}}.jpg');">
+          <div class="mdl-card__title" style="background-image: url('./static/images/headers/header_image{{imageIndex}}.jpg');">
             <h2 class="mdl-card__title-text">{{course}}</h2>
           </div>
           <div class="mdl-card__supporting-text">
             {{{markdown2HTML(content)}}}
           </div>
           <div class="homework-card__section">
-            <i class="icon material-icons">event</i>
+            <img class="icon" src="./static/images/icons/deadline.png" />
             <div class="content">
               <p>{{deadlineFullDescriptor}}</p>
             </div>
           </div>
           {{#if (type == 'lab')}}
           <div class="homework-card__section">
-            <i class="icon material-icons">check_circle</i>
+            <img class="icon" src="./static/images/icons/submit.png" />
             <div class="content">
               {{{markdown2HTML(submit)}}}
             </div>
