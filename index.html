@@ -55,16 +55,16 @@
     <script type="text/ractive" id="list-template">
       {{#if (homeworkList.today.length > 0)}}
         <div class="homework-section__header">今天</div>
-        <div class="homework-list today">
+        <div class="homework-list urgent">
           {{#homeworkList.today}}
-            <a href="#detail/{{id}}" class="homework-list__item">
+            <a href="#detail/{{id}}" class="homework-list__item {{type}}">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <img class="icon" src="./static/images/icons/lab.png" />
+                  <img class="icon" src="./static/images/icons/lab.png" title="实验" />
                 {{elseif (type == 'exam')}}
-                  <img class="icon" src="./static/images/icons/exam.png" />
+                  <img class="icon" src="./static/images/icons/exam.png" title="考试" />
                 {{else}}
-                  <img class="icon" src="./static/images/icons/homework.png" />
+                  <img class="icon" src="./static/images/icons/homework.png" title="作业" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
@@ -77,16 +77,16 @@
       
       {{#if (homeworkList.tomorrow.length > 0)}}
         <div class="homework-section__header">明天</div>
-        <div class="homework-list">
+        <div class="homework-list urgent">
           {{#homeworkList.tomorrow}}
-            <a href="#detail/{{id}}" class="homework-list__item">
+            <a href="#detail/{{id}}" class="homework-list__item {{type}}">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <img class="icon" src="./static/images/icons/lab.png" />
+                  <img class="icon" src="./static/images/icons/lab.png" title="实验" />
                 {{elseif (type == 'exam')}}
-                  <img class="icon" src="./static/images/icons/exam.png" />
+                  <img class="icon" src="./static/images/icons/exam.png" title="考试" />
                 {{else}}
-                  <img class="icon" src="./static/images/icons/homework.png" />
+                  <img class="icon" src="./static/images/icons/homework.png" title="作业" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
@@ -101,14 +101,14 @@
         <div class="homework-section__header">本周</div>
         <div class="homework-list">
           {{#homeworkList.thisWeek}}
-            <a href="#detail/{{id}}" class="homework-list__item">
+            <a href="#detail/{{id}}" class="homework-list__item {{type}}">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <img class="icon" src="./static/images/icons/lab.png" />
+                  <img class="icon" src="./static/images/icons/lab.png" title="实验" />
                 {{elseif (type == 'exam')}}
-                  <img class="icon" src="./static/images/icons/exam.png" />
+                  <img class="icon" src="./static/images/icons/exam.png" title="考试" />
                 {{else}}
-                  <img class="icon" src="./static/images/icons/homework.png" />
+                  <img class="icon" src="./static/images/icons/homework.png" title="作业" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
@@ -123,14 +123,14 @@
         <div class="homework-section__header">之后</div>
         <div class="homework-list">
           {{#homeworkList.later}}
-            <a href="#detail/{{id}}" class="homework-list__item">
+            <a href="#detail/{{id}}" class="homework-list__item {{type}}">
               <div class="homework-list__item--icon">
                 {{#if (type == 'lab')}}
-                  <img class="icon" src="./static/images/icons/lab.png" />
+                  <img class="icon" src="./static/images/icons/lab.png" title="实验" />
                 {{elseif (type == 'exam')}}
-                  <img class="icon" src="./static/images/icons/exam.png" />
+                  <img class="icon" src="./static/images/icons/exam.png" title="考试" />
                 {{else}}
-                  <img class="icon" src="./static/images/icons/homework.png" />
+                  <img class="icon" src="./static/images/icons/homework.png" title="作业" />
                 {{/if}}
               </div>
               <div class="homework-list__item--course">{{course}}</div>
