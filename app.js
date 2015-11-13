@@ -1,38 +1,47 @@
 var DateUtil = {
+  
   setToZeroOClock: function (date) {
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
     date.setMilliseconds(0);
   },
+  
   computeDateDifference: function (date1, date2) {
     DateUtil.setToZeroOClock(date1);
     DateUtil.setToZeroOClock(date2);
     return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
   },
+  
   computeDateDifferenceWithNow: function (date) {
     return DateUtil.computeDateDifference(new Date(), date);
   },
+  
   isInThePast: function (date) {
     return (DateUtil.computeDateDifferenceWithNow(date) < 0);
   },
+  
   isToday: function (date) {
     return (DateUtil.computeDateDifferenceWithNow(date) == 0);
   },
+  
   isTomorrow: function (date) {
     return (DateUtil.computeDateDifferenceWithNow(date) == 1);
   },
+  
   isInThisWeek: function (date) {
     DateUtil.setToZeroOClock(date);
     var now = new Date();
     var dateDifference = DateUtil.computeDateDifferenceWithNow(date);
     return (dateDifference >= 0 && dateDifference <= 6 && (date.getDay() >= now.getDay() || date.getDay() == 0));
   },
+  
   isInNextWeek: function (date) {
     var now = new Date();
     var dateDifferenceWithThisSunday = DateUtil.computeDateDifferenceWithNow(date) - (7 - now.getDay());
     return (dateDifferenceWithThisSunday >= 1 && dateDifferenceWithThisSunday <= 7);
   },
+  
   getDateDescriptor: function (date) {
     var numbers = ['日', '一', '二', '三', '四', '五', '六'];
     
@@ -48,6 +57,7 @@ var DateUtil = {
       return (date.getMonth() + 1) + '-' + date.getDate();
     }
   }
+  
 };
 
 var HomeworkUtil = {
@@ -65,6 +75,8 @@ var HomeworkUtil = {
       homework.labels.push(label.name);
       if (label.name == 'lab') {
         homework.type = 'lab';
+      } else if (label.name == 'exam') {
+        homework.type = 'exam';
       }
     });
     homework.type = homework.type || 'homework';
