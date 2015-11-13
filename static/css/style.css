@@ -1,40 +1,10 @@
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
-  src: local('Material Icons'),
-       local('MaterialIcons-Regular'),
-       url('../fonts/MaterialIcons-Regular.woff') format('woff'),
-       url('../fonts/MaterialIcons-Regular.woff2') format('woff2'),
-       url('../fonts/MaterialIcons-Regular.ttf') format('truetype');
+body {
+  background-color: #f0f0f0;
+  font-size: 13px;
 }
 
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
+body, p, h1, h2, h3, h4, h5, h6 {
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
 }
 
 code {
@@ -53,15 +23,6 @@ pre {
   word-break: keep-all;
 }
 
-body, p, h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
-}
-
-body {
-  background-color: #f0f0f0;
-  font-size: 13px;
-}
-
 .mdl-layout .homework-layout__header-row {
   padding-left: 40px;
 }
@@ -70,6 +31,11 @@ body {
   .mdl-layout .homework-layout__header-row {
     padding-left: 24px;
   }
+}
+
+.mdl-layout__header .mdl-layout__drawer-button .back-button {
+  width: 24px;
+  vertical-align: initial;
 }
 
 .mdl-layout__content .page-content {
@@ -100,41 +66,43 @@ body {
               0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
-.page-content .homework-card .mdl-card__title {
+.homework-card .mdl-card__title {
   background-size: cover;
   height: 256px;
   color: #fff;
 }
 
-.page-content .homework-card .mdl-card__supporting-text {
+.homework-card .mdl-card__supporting-text {
   width: initial;
   color: #393939;
 }
 
-.page-content .homework-card .homework-card__section {
+.homework-card .homework-card__section {
   min-height: 52px;
   padding: 0 16px;
   border-top: 1px solid rgba(0, 0, 0, .1);
   font-size: 13px;
 }
 
-.page-content .homework-card .homework-card__section .icon {
-  line-height: 52px;
+.homework-card .homework-card__section .icon {
+  width: 24px;
+  height: 24px;
   vertical-align: top;
-  padding-right: 16px;
+  margin-top: 14px;
+  margin-right: 16px;
 }
 
-.page-content .homework-card .homework-card__section .content {
+.homework-card .homework-card__section .content {
   display: inline-block;
   padding-top: 19px;
 }
 
-.page-content .homework-card .homework-card__section .content p {
+.homework-card .homework-card__section .content p {
   font-size: 13px;
   line-height: 1;
 }
 
-.page-content .homework-card .homework-card__comment .avatar {
+.homework-card .homework-card__comment .avatar {
   width: 24px;
   height: 24px;
   vertical-align: top;
@@ -143,12 +111,12 @@ body {
   border-radius: 12px;
 }
 
-.page-content .homework-card .homework-card__comment .date {
+.homework-card .homework-card__comment .date {
   color: #393939;
   text-decoration: none;
 }
 
-.page-content .homework-card .homework-card__comment .author {
+.homework-card .homework-card__comment .author {
   color: #393939;
   font-weight: bold;
   text-decoration: none;
@@ -196,7 +164,12 @@ body {
 }
 
 .homework-list__item .homework-list__item--icon {
-  padding: 8px 24px 8px 22px;
+  padding: 0 22px;
+}
+
+.homework-list__item .homework-list__item--icon .icon {
+  height: 24px;
+  width: 24px;
 }
 
 .homework-list__item .homework-list__item--course {
