@@ -142,8 +142,20 @@ pre {
               0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
-.homework-list.today .homework-list__item {
-  border-left: 3px solid #f44336;
+.homework-list.urgent .homework-list__item {
+  /* border-left: 3px solid #f44336; */
+}
+
+.homework-list .homework-list__item.homework {
+  border-left: 3px solid #207de5;
+}
+
+.homework-list .homework-list__item.lab {
+  border-left: 3px solid #009800;
+}
+
+.homework-list .homework-list__item.exam {
+  border-left: 3px solid #eb6420;
 }
 
 .homework-list .homework-list__item:first-of-type {
@@ -173,6 +185,7 @@ pre {
 }
 
 .homework-list__item .homework-list__item--course {
+  font-weight: bold;
   width: 120px;
 }
 
