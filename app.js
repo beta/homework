@@ -33,7 +33,10 @@ var DateUtil = {
     DateUtil.setToZeroOClock(date);
     var now = new Date();
     var dateDifference = DateUtil.computeDateDifferenceWithNow(date);
-    return (dateDifference >= 0 && dateDifference <= 6 && (date.getDay() >= now.getDay() || date.getDay() == 0));
+    
+    var dayOfToday = (now.getDay() == 0) ? 7 : now.getDay();
+    var dayOfDate = (date.getDay() == 0) ? 7 : date.getDay(); 
+    return (dateDifference >= 0 && dateDifference <= 6 && dayOfDate > dayOfToday);
   },
   
   isInNextWeek: function (date) {
