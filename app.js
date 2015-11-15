@@ -35,13 +35,14 @@ var DateUtil = {
     var dateDifference = DateUtil.computeDateDifferenceWithNow(date);
     
     var dayOfToday = (now.getDay() == 0) ? 7 : now.getDay();
-    var dayOfDate = (date.getDay() == 0) ? 7 : date.getDay(); 
+    var dayOfDate = (date.getDay() == 0) ? 7 : date.getDay();
     return (dateDifference >= 0 && dateDifference <= 6 && dayOfDate > dayOfToday);
   },
   
   isInNextWeek: function (date) {
     var now = new Date();
-    var dateDifferenceWithThisSunday = DateUtil.computeDateDifferenceWithNow(date) - (7 - now.getDay());
+    var dayOfToday = (now.getDay() == 0) ? 7 : now.getDay();
+    var dateDifferenceWithThisSunday = DateUtil.computeDateDifferenceWithNow(date) - (7 - dayOfToday);
     return (dateDifferenceWithThisSunday >= 1 && dateDifferenceWithThisSunday <= 7);
   },
   
