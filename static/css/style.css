@@ -77,6 +77,10 @@ pre {
   color: #393939;
 }
 
+.homework-card .mdl-card__supporting-text p img {
+  max-width: 100%;
+}
+
 .homework-card .homework-card__section {
   min-height: 52px;
   padding: 0 16px;
@@ -100,10 +104,6 @@ pre {
 .homework-card .homework-card__section .content p {
   font-size: 13px;
   line-height: 1;
-}
-
-.homework-card .homework-card__section .content p img {
-  width: 100%;
 }
 
 .homework-card .homework-card__comment .avatar {
