@@ -71,7 +71,6 @@ var HomeworkUtil = {
     var homework = jsyaml.safeLoad(metadata);
     
     homework.id = issue.number;
-    homework.course = issue.title;
     homework.content = issue.body.substring(issue.body.indexOf('---') + 7);
     
     homework.labels = [];
