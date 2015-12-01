@@ -102,6 +102,10 @@ pre {
   line-height: 1;
 }
 
+.homework-card .homework-card__section .content p img {
+  width: 100%;
+}
+
 .homework-card .homework-card__comment .avatar {
   width: 24px;
   height: 24px;
