@@ -385,9 +385,8 @@ window.ractiveHeader = new Ractive({
 });
 
 var routes = {
-  '/': index,
-  '//': index,
-  '/detail/:id': detail
+  '/[A-Za-z0-9-_&=]*': index,
+  '/detail/:id': detail,
 };
 
 var router = new Router(routes);
