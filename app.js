@@ -142,14 +142,14 @@ var HomeworkUtil = {
     options.success = options.success || function (homework) {};
     options.error = options.error || function (jqXHR, textStatus, errorThrown) {};
     
-    var data = {};
+    var headers = {};
     if (_config.access_token != '') {
-      data.access_token = _config.access_token;
+      headers.Authorization = 'Bearer ' + _config.access_token;
     }
     
     $.ajax({
       url: 'https://api.github.com/repos/' + _config.username + '/' + _config.repo + '/issues/' + options.id,
-      data: data,
+      headers: headers,
       success: function (data, textStatus, jqXHR) {
         var homework = HomeworkUtil.parseIssue(data);
         options.success(homework);
@@ -164,14 +164,14 @@ var HomeworkUtil = {
     options.success = options.success || function (comments) {};
     options.error = options.error || function (jqXHR, textStatus, errorThrown) {};
     
-    var data = {};
+    var headers = {};
     if (_config.access_token != '') {
-      data.access_token = _config.access_token;
+      headers.Authorization = 'Bearer ' + _config.access_token;
     }
     
     $.ajax({
       url: 'https://api.github.com/repos/' + _config.username + '/' + _config.repo + '/issues/' + options.id + '/comments',
-      data: data,
+      headers: headers,
       success: function (data, textStatus, jqXHR) {
         var comments = HomeworkUtil.parseComments(data);
         options.success(comments);
@@ -186,15 +186,18 @@ var HomeworkUtil = {
     options.error = options.error || function (jqXHR, textStatus, errorThrown) {};
     
     var data = {};
-    if (_config.access_token != '') {
-      data.access_token = _config.access_token;
-    }
     if (_config.validation == true) {
       data.labels = _config.validation_label;
     }
     
+    var headers = {};
+    if (_config.access_token != '') {
+      headers.Authorization = 'Bearer ' + _config.access_token;
+    }
+    
     $.ajax({
       url: 'https://api.github.com/repos/' + _config.username + '/' + _config.repo + '/issues',
+      headers: headers,
       data: data,
       success: function (data, textStatus, jqXHR) {
         var homeworkList = HomeworkUtil.parseIssues(data);
